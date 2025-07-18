@@ -1,1 +1,38 @@
-/target
+# Rust build artifacts
+/target/
+**/target/
+
+# Cargo lock file (uncomment if this is a library)
+# Cargo.lock
+
+# Database files
+*.db
+*.db3
+*.sqlite
+*.sqlite3
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Rust-specific
+**/*.rs.bk
+*.pdb
+
+# Documentation
+/doc/
+
+# Profiling data
+*.profraw
