@@ -8,6 +8,7 @@ trait SqlResultExt<T> {
 
 pub struct BudgetManager {
     db: DatabaseManager,
+    current_budget_id_selection: i64,
     budgets: Vec<Budget>,
 }
 
@@ -54,10 +55,14 @@ impl BudgetManager {
                 std::process::exit(1)
             }
         };
-        // TODO Fix
+
         let budgets = db.fetch_budgets()?;
 
-        Ok(Self { db, budgets })
+        Ok(Self {
+            db,
+            budgets,
+            current_budget_id_selection: 1,
+        })
     }
 
     pub fn create_budget(&mut self, name: &str, budget_limit: f64) -> Result<i64, BudgetErrors> {
@@ -121,6 +126,14 @@ impl BudgetManager {
             Some(budget) => Ok(budget),
             None => Err(BudgetErrors::BudgetNotFound(id)),
         }
+    }
+
+    pub fn get_selected_budget_id(&self) -> i64 {
+        self.current_budget_id_selection
+    }
+
+    pub fn switch_budget(&mut self, id: i64) {
+        self.current_budget_id_selection = id;
     }
 }
 

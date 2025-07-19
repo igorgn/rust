@@ -1,6 +1,5 @@
-use clap::Parser;
-
 use crate::{cli::run_cli, web};
+use clap::Parser;
 
 #[derive(Parser)]
 pub struct CliArgs {
