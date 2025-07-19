@@ -18,7 +18,7 @@ pub trait Selectable: Sized {
     fn as_str(&self) -> &'static str;
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, serde::Serialize)]
 pub enum ExpenseCategory {
     Housing,
     Transportation,

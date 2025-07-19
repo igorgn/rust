@@ -1,5 +1,6 @@
 use super::db::DatabaseManager;
 use crate::{errors::BudgetErrors, mapper::ExpenseCategory};
+// use serde;
 use rusqlite::{Result, Row};
 
 trait SqlResultExt<T> {
@@ -12,14 +13,14 @@ pub struct BudgetManager {
     budgets: Vec<Budget>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct Budget {
     pub id: i64,
     pub name: String,
     pub budget_limit: f64,
     pub expenses: Vec<Expense>,
 }
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct Expense {
     pub budget_id: i64,
     pub amount: f64,
