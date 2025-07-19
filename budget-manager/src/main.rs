@@ -5,10 +5,16 @@ mod errors;
 mod helpers;
 mod manager;
 mod mapper;
+mod web;
+mod cli_args;
 
-use cli::run_cli;
-fn main() {
-    if let Err(e) = run_cli() {
-        eprintln!("{}", e)
-    }
+use crate::cli_args::start;
+
+#[macro_use]
+extern crate rocket;
+
+
+#[rocket::main]
+async fn main() {
+    start().await;
 }

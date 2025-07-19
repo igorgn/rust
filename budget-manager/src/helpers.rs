@@ -1,12 +1,14 @@
 use std::str::FromStr;
 
-use dialoguer::{theme::ColorfulTheme, Input, Result, Select};
+use dialoguer::{Input, Result, Select, theme::ColorfulTheme};
 
 use crate::mapper::Selectable;
 
 pub fn get_input<T: FromStr>(prompt: &str) -> Result<T> {
     loop {
-        let input: String = Input::with_theme(&ColorfulTheme::default()).with_prompt(prompt).interact_text()?;
+        let input: String = Input::with_theme(&ColorfulTheme::default())
+            .with_prompt(prompt)
+            .interact_text()?;
         match input.trim().parse() {
             Ok(val) => return Ok(val),
             Err(_) => println!("Please enter valid input: "),
