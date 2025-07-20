@@ -1,4 +1,5 @@
 use rusqlite::types::{FromSql, FromSqlError, ValueRef};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Copy)]
 pub enum BudgetActions {
@@ -18,7 +19,7 @@ pub trait Selectable: Sized {
     fn as_str(&self) -> &'static str;
 }
 
-#[derive(Debug, Clone, Copy, serde::Serialize)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum ExpenseCategory {
     Housing,
     Transportation,
@@ -58,7 +59,6 @@ impl Selectable for BudgetActions {
 }
 
 impl Selectable for ExpenseCategory {
-    // type Item = ExpenseCategory;
     fn all() -> &'static [Self] {
         &[
             ExpenseCategory::Housing,

@@ -9,7 +9,6 @@ use crate::{
 
 pub fn handle_action(action: &BudgetActions, manager: &mut BudgetManager) -> Result<(), CliError> {
     match action {
-        //TODO rethink commands and output.
         BudgetActions::CreateBudget => create_budget(manager),
         BudgetActions::AddExpense => add_expense(manager),
         BudgetActions::EditBudget => edit_budget(manager),
