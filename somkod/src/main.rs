@@ -1,8 +1,11 @@
+mod jq;
 mod wc;
+
+use crate::jq::Jq;
 use crate::wc::WC;
 use anyhow::{Ok, Result};
 use clap::{Parser, Subcommand};
-use std::path::PathBuf;
+use std::{os::unix::process, path::PathBuf};
 
 #[derive(Debug, Parser)]
 #[command(name = "somkod")]
@@ -29,6 +32,10 @@ enum Commands {
         #[arg(short, long, default_value_t = false)]
         words: bool,
     },
+
+    Jq {
+        file_path: PathBuf,
+    },
 }
 
 fn main() -> Result<()> {
@@ -45,6 +52,15 @@ fn main() -> Result<()> {
             } => {
                 let wc = WC::new(file_path, bytes, lines, words, chars);
                 wc.execute();
+            }
+
+            Commands::Jq { file_path } => {
+                let jq = Jq::new(file_path);
+                jq.parse();
+                // if let Err(err) = jq.parse() {
+                //     eprintln!("{}", err);
+                //     std::process::exit(1)
+                // }
             }
         },
         None => {}
