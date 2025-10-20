@@ -5,7 +5,7 @@ use crate::jq::Jq;
 use crate::wc::WC;
 use anyhow::{Ok, Result};
 use clap::{Parser, Subcommand};
-use std::{os::unix::process, path::PathBuf};
+use std::{path::PathBuf};
 
 #[derive(Debug, Parser)]
 #[command(name = "somkod")]
@@ -41,29 +41,26 @@ enum Commands {
 fn main() -> Result<()> {
     let cli = Cli::parse();
 
-    match cli.command {
-        Some(command) => match command {
-            Commands::Wc {
-                file_path,
-                bytes,
-                chars,
-                lines,
-                words,
-            } => {
-                let wc = WC::new(file_path, bytes, lines, words, chars);
-                wc.execute();
-            }
+    if let Some(command) = cli.command { match command {
+        Commands::Wc {
+            file_path,
+            bytes,
+            chars,
+            lines,
+            words,
+        } => {
+            let wc = WC::new(file_path, bytes, lines, words, chars);
+            wc.execute();
+        }
 
-            Commands::Jq { file_path } => {
-                let jq = Jq::new(file_path);
-                jq.parse();
-                // if let Err(err) = jq.parse() {
-                //     eprintln!("{}", err);
-                //     std::process::exit(1)
-                // }
+        Commands::Jq { file_path } => {
+            let jq = Jq::new(file_path);
+            // jq.parse();
+            if let Err(err) = jq.parse() {
+                eprintln!("{}", err);
+                std::process::exit(1)
             }
-        },
-        None => {}
-    }
+        }
+    } }
     Ok(())
 }
