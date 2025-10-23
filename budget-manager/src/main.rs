@@ -15,5 +15,6 @@ extern crate rocket;
 
 #[rocket::main]
 async fn main() {
+    println("yalla");
     start().await;
 }
